@@ -104,4 +104,11 @@ class AuthController extends Controller
         $user->save();	
     	return "Se cambio la contraseña";
     }
+
+	public function logout(Request $request){
+
+		$request->user()->currentAccessToken()->delete();
+       	
+    	return  response()->json("Se elimino el token",200);
+    }
 }

@@ -80,4 +80,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //UserFinal
     Route::get('limit/getAll/{id}', [LimitController::class, 'getAll']);
     Route::post('limit/store/{id}', [LimitController::class, 'store']);
+
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+
 });

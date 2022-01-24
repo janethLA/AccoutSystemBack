@@ -27,6 +27,9 @@ class MessageExpiryFunction
             if( $diff->days==1) {
                 $result= "Su cuenta expira en ".$diff->days." día";
             }
+            if( $diff->days==0) {
+                $result= "Su cuenta expira hoy!!! ";
+            }
         
             return $result;
         

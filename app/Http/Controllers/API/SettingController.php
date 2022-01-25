@@ -6,7 +6,9 @@ use App\Dao\SettingDao;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Exception;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -40,6 +42,7 @@ class SettingController extends Controller
 		}
 		return "Se actualizó la imagen";
 	}
+    
    
     public function getSetting() {
         $s=Setting::find(1);
@@ -47,8 +50,11 @@ class SettingController extends Controller
         $setting->idSetting=$s->id;
         $setting->welcomeMessage=$s->welcome_message;
         $setting->image=$s->image;
-
-		return response()->json($setting);
+        //>json(Employee::find(202), 200, [], JSON_UNESCAPED_UNICODE); 
+      //  json_encode(
+          //JSON_INVALID_UTF8_SUBSTITUTE
+        //return  response()->json($setting);
+		return response()->json($setting,200, [],  JSON_INVALID_UTF8_IGNORE );
 	}
     /**
      * Store a newly created resource in storage.
@@ -56,35 +62,42 @@ class SettingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $s=Setting::find(1);
-        
-
-		if(!empty($request->image)){
-            $path=$request->image->store('public/logo');
-            $s->image=$path;
-            $s->save();
-            return "Se actualizó la imagen";
-        }else{
-            return "No se actualizó la imagen";
-        }
-	
-    }
     // public function store(Request $request)
     // {
     //     $s=Setting::find(1);
         
 
 	// 	if(!empty($request->image)){
-    //         $path=file_get_contents($request->image);
-    //         $s->image=$path;
+    //         $path=$request->image->store('public/logo');
+    //         $url=Storage::url($path);
+    //         $url='AccountSystem/public'.$url;
+    //         $s->image=$url;
     //         $s->save();
     //         return "Se actualizó la imagen";
     //     }else{
     //         return "No se actualizó la imagen";
     //     }
+	
     // }
+    public function store(Request $request)
+    {
+        $s=Setting::find(1);
+
+		if(!empty($request->image)){
+            $path = $request->file('image')->getRealPath();
+            $logo = file_get_contents($path);
+            $base64 = base64_encode($logo);
+
+            $s->image=$base64;
+            $s->save();
+            // $path=file_get_contents($request->image);
+            // $s->image=$path;
+            // $s->save();
+            return "Se actualizó la imagen";
+        }else{
+            return "No se actualizó la imagen";
+        }
+    }
 
     /**
      * Display the specified resource.

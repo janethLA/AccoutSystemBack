@@ -17,8 +17,8 @@ class CreateSettingsTable extends Migration
             $table->id();
 
             $table->string('welcome_message')->nullable();
-            $table->string('image')->nullable();
-            //$table->binary('image')->nullable();
+            //$table->string('image')->nullable();
+            $table->binary('image')->nullable();
             //$table->timestamps();
         });
     }

@@ -78,8 +78,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('setting/updateWelcomeMessage', [SettingController::class, 'updateWelcomeMessage']);
 
     //UserFinal
-    Route::get('limit/getAll/{id}', [LimitController::class, 'getAll']);
+    Route::get('limit/getByAccount', [LimitController::class, 'getByAccount']); ///change
     Route::post('limit/store/{id}', [LimitController::class, 'store']);
+    Route::put('limit/updateLimit', [LimitController::class, 'updateLimit']);
 
     Route::post('auth/logout', [AuthController::class, 'logout']);
 

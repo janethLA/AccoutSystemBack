@@ -19,8 +19,10 @@ class CreateLimitsTable extends Migration
             $table->integer('year')->nullable();
             $table->double('limit')->nullable();
 
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->unsignedBigInteger('user_id')->nullable();
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('expense_id')->nullable();
+            $table->foreign('expense_id')->references('id')->on('expenses')->onDelete('cascade');
 
             //$table->timestamps();
         });

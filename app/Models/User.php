@@ -65,9 +65,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ExpenseUser');
     }
 
-    public function limit(){
-        return $this->hasMany('App\Models\Limit');
-    }
+    // public function limit(){
+    //     return $this->hasMany('App\Models\Limit');
+    // }
 
     
 } 

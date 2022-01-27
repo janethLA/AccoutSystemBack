@@ -68,6 +68,7 @@ class IncomeController extends Controller
         try {
             $income=Income::find($id);
             $income->active=false;
+            $income->removal_date=now();
             $income->save();
             return "Se eliminó la cuenta de ingreso ".$income->income_name;
        

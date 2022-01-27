@@ -17,4 +17,8 @@ class Expense extends Model
     public function expense_user(){
         return $this->hasMany('App\Models\ExpenseUser');
     }
+
+    public function limit(){
+        return $this->hasMany('App\Models\Limit');
+    }
 }

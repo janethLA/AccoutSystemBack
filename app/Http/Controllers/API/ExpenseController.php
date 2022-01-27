@@ -62,6 +62,7 @@ class ExpenseController extends Controller
         try {
             $expense=Expense::find($id);
             $expense->active=false;
+            $expense->removal_date=now();
             $expense->save();
             return "Se eliminó la cuenta de egreso ".$expense->expense_name;
        

@@ -8,6 +8,8 @@ use App\Models\Limit;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class LimitController extends Controller
 {
     public function store($id, Request $request)
@@ -31,21 +33,24 @@ class LimitController extends Controller
         $allLimits = $expense->limit;
         $allLimitsByOrder = collect([]);
 
-        foreach ($allLimits as $found) {
+        if($allLimits->isNotEmpty()){
+            foreach ($allLimits as $found) {
 
-            // $date = strtotime($year);
-            // $foundYear = date("Y", $date);
-            // echo $foundYear;
-            if ($found->year == $year) {
-
-                $newLimit = new Limit();
-                $newLimit->id = $found->id;
-                $newLimit->month = $found->month;
-                $newLimit->year = $found->year;
-                $newLimit->limit = $found->limit;
-                $allLimitsByOrder->push($newLimit);
-            };
+                // $date = strtotime($year);
+                // $foundYear = date("Y", $date);
+                // echo $foundYear;
+                if ($found->year == $year) {
+    
+                    $newLimit = new Limit();
+                    $newLimit->id = $found->id;
+                    $newLimit->month = $found->month;
+                    $newLimit->year = $found->year;
+                    $newLimit->limit = $found->limit;
+                    $allLimitsByOrder->push($newLimit);
+                };
+            }
         }
+       
         return $allLimitsByOrder->all();
     }
 

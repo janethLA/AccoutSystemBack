@@ -19,6 +19,7 @@ class CreateExpensesTable extends Migration
             $table->string('expense_name');
             $table->date('registration_date')->nullable();
             $table->boolean('active');
+            $table->date('removal_date')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

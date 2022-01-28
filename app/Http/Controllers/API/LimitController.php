@@ -25,9 +25,9 @@ class LimitController extends Controller
         return  $limit;
     }
 
-    public function getByAccount(Request $request)
+    public function getByAccount( $idExpense,$year)
     {
-        $expense = Expense::find($request->idExpense);
+        $expense = Expense::find($idExpense);
         $allLimits = $expense->limit;
         $allLimitsByOrder = collect([]);
 
@@ -36,7 +36,7 @@ class LimitController extends Controller
             // $date = strtotime($year);
             // $foundYear = date("Y", $date);
             // echo $foundYear;
-            if ($found->year == $request->year) {
+            if ($found->year == $year) {
 
                 $newLimit = new Limit();
                 $newLimit->id = $found->id;

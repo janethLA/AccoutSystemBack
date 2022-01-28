@@ -11,6 +11,7 @@ class ExpenseUserDao
     public $amount;
     public $comment;
     public $expenseAccount;
+	public $idExpense;
 
 	
 	public function setIdExpenseUser($idExpenseUser) {
@@ -39,4 +40,9 @@ class ExpenseUserDao
     public function setExpenseAccount($expenseAccount) {
 		$this->expenseAccount = $expenseAccount;
 	}
+
+	public function setIdExpense($idExpense) {
+		$this->idExpense = $idExpense;
+	}
+	
 }

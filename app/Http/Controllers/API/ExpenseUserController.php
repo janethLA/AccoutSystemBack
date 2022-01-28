@@ -61,6 +61,7 @@ class ExpenseUserController extends Controller
 			$expense->setConcept($found->concept);
 			$expense->setComment($found->comment);
 			$expense->setExpenseAccount($found->expense->expense_name);
+            $expense->setIdExpense($found->expense_id);
 			
 			$allExpensesByOrder->push($expense);
 

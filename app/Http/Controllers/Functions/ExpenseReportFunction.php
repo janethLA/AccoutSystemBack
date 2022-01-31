@@ -20,10 +20,10 @@ class ExpenseReportFunction
 
 		foreach ($allExpenses as $found) {
 			//echo "lo ".$found->removal_date;
-			$date1 = strtotime($found->removal_date);
-			$yearLast = date("Y", $date1);
-			//echo "hols ".$yearLast;
-			if ($year <= $yearLast || $found->removal_date == null) {
+			// $date1 = strtotime($found->removal_date);
+			// $yearLast = date("Y", $date1);
+			// //echo "hols ".$yearLast;
+			// if ($year <= $yearLast || $found->removal_date == null) {
 
 				$expense = new ReportExpenseDao();
 				$expense->setAccountName($found->expense_name);
@@ -43,16 +43,21 @@ class ExpenseReportFunction
 				$amountNovember = 0.0;
 				$amountDecember = 0.0;
 
+				$isEmpty =1;
 				for ($j = 0; $j < $found->expense_user->count(); $j++) {
 
 					$expenseUser = $found->expense_user[$j];
 					$date = strtotime($expenseUser->date);
 					$foundYear = date("Y", $date);
 					// echo $foundYear;
+					
 					if ($foundYear == $year) {
 
+						$isEmpty = 0;
+						
 						if (strcasecmp($expenseUser->month, "Enero") == 0) {
 							$amountJanuary += $expenseUser->amount;
+							
 						}
 						if (strcasecmp($expenseUser->month, "Febrero") == 0) {
 							$amountFebruary += $expenseUser->amount;
@@ -89,24 +94,28 @@ class ExpenseReportFunction
 						}
 					}
 				}
-				$amountForMonth->push($amountJanuary);
-				$amountForMonth->push($amountFebruary);
-				$amountForMonth->push($amountMarch);
-				$amountForMonth->push($amountApril);
-				$amountForMonth->push($amountMay);
-				$amountForMonth->push($amountJune);
-				$amountForMonth->push($amountJuly);
-				$amountForMonth->push($amountAugust);
-				$amountForMonth->push($amountSeptember);
-				$amountForMonth->push($amountOctuber);
-				$amountForMonth->push($amountNovember);
-				$amountForMonth->push($amountDecember);
+				if ($isEmpty==0) {
 
-				$expense->setAmount($amountForMonth);
-				$expense->setLimits(Self::getLimitByAccount($found, $year));
+					//echo "esta vacio ? ".$isEmpty;
+					$amountForMonth->push($amountJanuary);
+					$amountForMonth->push($amountFebruary);
+					$amountForMonth->push($amountMarch);
+					$amountForMonth->push($amountApril);
+					$amountForMonth->push($amountMay);
+					$amountForMonth->push($amountJune);
+					$amountForMonth->push($amountJuly);
+					$amountForMonth->push($amountAugust);
+					$amountForMonth->push($amountSeptember);
+					$amountForMonth->push($amountOctuber);
+					$amountForMonth->push($amountNovember);
+					$amountForMonth->push($amountDecember);
 
-				$allExpensesForReport->push($expense);
-			}
+					$expense->setAmount($amountForMonth);
+					$expense->setLimits(Self::getLimitByAccount($found, $year));
+
+					$allExpensesForReport->push($expense);
+				}
+			//}
 		}
 
 		return $allExpensesForReport;

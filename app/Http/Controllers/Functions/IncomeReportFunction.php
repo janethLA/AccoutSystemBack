@@ -17,74 +17,78 @@ class IncomeReportFunction
 
 		foreach ($allIncomes as $found) {
 
-			$date1 = strtotime($found->removal_date);
-			$yearLast = date("Y", $date1);
-			if ($year <= $yearLast || $found->removal_date == null) {
+			// $date1 = strtotime($found->removal_date);
+			// $yearLast = date("Y", $date1);
+			// if ($year <= $yearLast || $found->removal_date == null) {
 
-				$income = new ReportDao();
-				$income->setAccountName($found->income_name);
+			$income = new ReportDao();
+			$income->setAccountName($found->income_name);
 
-				$amountForMonth = collect();
+			$amountForMonth = collect();
 
-				$amountJanuary = 0.0;
-				$amountFebruary = 0.0;
-				$amountMarch = 0.0;
-				$amountApril = 0.0;
-				$amountMay = 0.0;
-				$amountJune = 0.0;
-				$amountJuly = 0.0;
-				$amountAugust = 0.0;
-				$amountSeptember = 0.0;
-				$amountOctuber = 0.0;
-				$amountNovember = 0.0;
-				$amountDecember = 0.0;
+			$amountJanuary = 0.0;
+			$amountFebruary = 0.0;
+			$amountMarch = 0.0;
+			$amountApril = 0.0;
+			$amountMay = 0.0;
+			$amountJune = 0.0;
+			$amountJuly = 0.0;
+			$amountAugust = 0.0;
+			$amountSeptember = 0.0;
+			$amountOctuber = 0.0;
+			$amountNovember = 0.0;
+			$amountDecember = 0.0;
 
-				for ($j = 0; $j < $found->income_user->count(); $j++) {
+			$isEmpty = 1;
+			for ($j = 0; $j < $found->income_user->count(); $j++) {
 
-					$incomeUser = $found->income_user[$j];
-					$date = strtotime($incomeUser->date);
-					$foundYear = date("Y", $date);
-					// echo $foundYear;
-					if ($foundYear == $year) {
+				$incomeUser = $found->income_user[$j];
+				$date = strtotime($incomeUser->date);
+				$foundYear = date("Y", $date);
+				// echo $foundYear;
+				if ($foundYear == $year) {
+					$isEmpty = 0;
 
-						if (strcasecmp($incomeUser->month, "Enero") == 0) {
-							$amountJanuary += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Febrero") == 0) {
-							$amountFebruary += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Marzo") == 0) {
-							$amountMarch += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Abril") == 0) {
-							$amountApril += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Mayo") == 0) {
-							$amountMay += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Junio") == 0) {
-							$amountJune += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Julio") == 0) {
-							$amountJuly += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Agosto") == 0) {
-							$amountAugust += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Septiembre") == 0) {
-							$amountSeptember += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Octubre") == 0) {
-							$amountOctuber += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Noviembre") == 0) {
-							$amountNovember += $incomeUser->amount;
-						}
-						if (strcasecmp($incomeUser->month, "Diciembre") == 0) {
-							$amountDecember += $incomeUser->amount;
-						}
+					if (strcasecmp($incomeUser->month, "Enero") == 0) {
+						$amountJanuary += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Febrero") == 0) {
+						$amountFebruary += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Marzo") == 0) {
+						$amountMarch += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Abril") == 0) {
+						$amountApril += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Mayo") == 0) {
+						$amountMay += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Junio") == 0) {
+						$amountJune += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Julio") == 0) {
+						$amountJuly += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Agosto") == 0) {
+						$amountAugust += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Septiembre") == 0) {
+						$amountSeptember += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Octubre") == 0) {
+						$amountOctuber += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Noviembre") == 0) {
+						$amountNovember += $incomeUser->amount;
+					}
+					if (strcasecmp($incomeUser->month, "Diciembre") == 0) {
+						$amountDecember += $incomeUser->amount;
 					}
 				}
+			}
+			if ($isEmpty == 0) {
+
 				$amountForMonth->push($amountJanuary);
 				$amountForMonth->push($amountFebruary);
 				$amountForMonth->push($amountMarch);
@@ -102,6 +106,8 @@ class IncomeReportFunction
 
 				$allIncomesForReport->push($income);
 			}
+
+			//	}
 		}
 
 		return $allIncomesForReport;

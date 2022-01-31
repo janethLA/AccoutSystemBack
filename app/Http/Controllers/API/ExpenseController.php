@@ -61,10 +61,17 @@ class ExpenseController extends Controller
 
         try {
             $expense=Expense::find($id);
-            $expense->active=false;
-            $expense->removal_date=now();
-            $expense->save();
-            return "Se eliminó la cuenta de egreso ".$expense->expense_name;
+            // $expense->active=false;
+            // $expense->removal_date=now();
+            // $expense->save();
+            if($expense->expense_user->count()==0 && $expense->limit->count()==0){
+
+                $expense->delete();
+                return "Se eliminó la cuenta de egreso ".$expense->expense_name;
+            }else{
+                return "No se puede eliminar la cuenta de egreso ".$expense->expense_name;
+            }
+            
        
 		} catch (Exception $e) {
 			return "No se eliminó la cuenta de egreso";
@@ -88,6 +95,20 @@ class ExpenseController extends Controller
     public function expensesReport($id, $year){
 
         return  ExpenseReportFunction::incomesReport($id,$year);
+    }
+
+    public function noExistsExpenseName($expenseName){
+
+        //$result=true;
+        $result='true';
+    	$allExpenses = Expense::all();
+		foreach($allExpenses as $a) {
+			if(strcasecmp($a->expense_name, $expenseName) === 0) {
+                $result='false';
+			}
+		}
+		
+		return $result;
     }
 
     

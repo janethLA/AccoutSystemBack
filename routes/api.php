@@ -57,12 +57,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('income/deleteIncome/{id}', [IncomeController::class, 'deleteIncome']);
     Route::put('income/updateIncome/{id}', [IncomeController::class, 'updateIncome']);
     Route::get('income/incomesReport/{id}/{year}', [IncomeController::class, 'incomesReport']);
+    Route::get('income/noExistsIncomeName/{incomeName}', [IncomeController::class, 'noExistsIncomeName']);
 
     Route::post('expense/createExpense/{id}', [ExpenseController::class, 'store']);
     Route::get('expense/allExpenses/{id}', [ExpenseController::class, 'getAllExpenses']);
     Route::put('expense/deleteExpense/{id}', [ExpenseController::class, 'deleteExpense']);
     Route::put('expense/updateExpense/{id}', [ExpenseController::class, 'updateExpense']);
     Route::get('expense/expensesReport/{id}/{year}', [ExpenseController::class, 'expensesReport']);
+    Route::get('expense/noExistsExpenseName/{expenseName}', [ExpenseController::class, 'noExistsExpenseName']);
 
 
     Route::post('incomeUser/registerIncome/{id}', [IncomeUserController::class, 'store']);

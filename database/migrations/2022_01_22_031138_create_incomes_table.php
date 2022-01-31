@@ -19,7 +19,7 @@ class CreateIncomesTable extends Migration
             $table->string('income_name');
             $table->date('registration_date')->nullable();
             $table->boolean('active');
-            $table->date('removal_date')->nullable();
+            //$table->date('removal_date')->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

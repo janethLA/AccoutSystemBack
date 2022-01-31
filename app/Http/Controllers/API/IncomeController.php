@@ -67,10 +67,19 @@ class IncomeController extends Controller
 
         try {
             $income=Income::find($id);
-            $income->active=false;
-            $income->removal_date=now();
-            $income->save();
-            return "Se eliminó la cuenta de ingreso ".$income->income_name;
+            // $income->active=false;
+            // $income->removal_date=now();
+           // $income->save();
+         
+            if($income->income_user->count()==0){
+
+                $income->delete();
+                // echo 'incomeUser : ' ;
+                return "Se eliminó la cuenta de ingreso ".$income->income_name;
+            }else{
+                return "No se puede eliminar la cuenta de ingreso ".$income->income_name;
+            }
+           
        
 		} catch (Exception $e) {
 			return "No se eliminó la cuenta de ingreso";
@@ -96,6 +105,19 @@ class IncomeController extends Controller
         return  IncomeReportFunction::incomesReport($id,$year);
     }
 
+    public function noExistsIncomeName($incomeName){
+
+        //$result=true;
+        $result='true';
+    	$allIncomes = Income::all();
+		foreach($allIncomes as $a) {
+			if(strcasecmp($a->income_name, $incomeName) === 0) {
+                $result='false';
+			}
+		}
+		
+		return $result;
+    }
     /**
      * Display the specified resource.
      *

@@ -98,6 +98,13 @@ class ExpenseUserController extends Controller
 
         
     }
+
+    public function deleteExpenseOfUser($id){
+        $expense=ExpenseUser::find($id);
+        $expense->delete();
+        return "Se eliminó correctamente";
+
+    }
     /**
      * Display the specified resource.
      *

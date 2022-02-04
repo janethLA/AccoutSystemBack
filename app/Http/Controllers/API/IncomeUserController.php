@@ -99,6 +99,12 @@ class IncomeUserController extends Controller
 
         
     }
+
+    public function deleteIncomeOfUser($id){
+        $income=IncomeUser::find($id);
+        $income->delete();
+        return "Se eliminó correctamente";
+    }
     /**
      * Display the specified resource.
      *
